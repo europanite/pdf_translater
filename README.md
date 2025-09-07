@@ -13,9 +13,7 @@ Both scripts are filesystem‑friendly (work with a single file or recursively o
 
 Convert PDF pages to images while mirroring the input directory tree under the output root.
 
-### Installation
-```bash
-pip install pymupdf
+
 ```
 
 ### Usage
@@ -63,11 +61,6 @@ output/
 Convert images to PDF while mirroring the input directory tree.  
 **Default:** each image becomes one PDF.  
 **Option `--merge`:** merge images **per folder** into one multi‑page PDF.
-
-### Installation
-```bash
-pip install pillow
-```
 
 ### Usage
 ```bash
@@ -119,14 +112,5 @@ output/
 - When converting JPG with `pdf2png_tree.py`, use `--ext jpg` to reduce file size.
 - Sort order for `--merge` follows filename order; rename files if you need a specific sequence.
 
-## Troubleshooting
-
-- **Module not found**: Install dependencies
-  ```bash
-  pip install pymupdf pillow
-  ```
-- **Permission issues inside CI/containers**: ensure the output root exists and is writable.
-- **Non‑RGB images**: the scripts convert to RGB automatically when writing to PDF.
-
 ## License
-MIT
+- Apache License 2.0
