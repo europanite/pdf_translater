@@ -1,4 +1,4 @@
-# pdf_img_translater
+# [Pdf Translater](https://github.com/europanite/pdf_translater "Pdf Translater")
 
 This repository contains two Python command‑line utilities that convert between **PDF** and **PNG/JPG** while **preserving the original directory structure**.
 

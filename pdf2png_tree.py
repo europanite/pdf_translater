@@ -33,6 +33,7 @@ Options:
 import argparse
 import sys
 from pathlib import Path
+
 import pymupdf  # PyMuPDF
 
 
@@ -133,14 +134,27 @@ def convert_pdf(
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Convert PDFs to PNG/JPG while preserving directory structure")
+    parser = argparse.ArgumentParser(
+        description="Convert PDFs to PNG/JPG while preserving directory structure"
+    )
     parser.add_argument("input_path", type=Path, help="Input PDF file or directory")
     parser.add_argument("output_root", type=Path, help="Output root directory")
-    parser.add_argument("-d", "--dpi", type=int, default=144, help="Output resolution (default: 144)")
-    parser.add_argument("--ext", choices=["png", "jpg"], default="png", help="Output image format (default: png)")
+    parser.add_argument(
+        "-d", "--dpi", type=int, default=144, help="Output resolution (default: 144)"
+    )
+    parser.add_argument(
+        "--ext",
+        choices=["png", "jpg"],
+        default="png",
+        help="Output image format (default: png)",
+    )
     parser.add_argument("--overwrite", action="store_true", help="Overwrite existing files")
     parser.add_argument("--per-pdf-subdir", action="store_true", help="Create a subfolder per PDF")
-    parser.add_argument("--suffix", default="_png", help="Subfolder suffix when --per-pdf-subdir is used")
+    parser.add_argument(
+        "--suffix",
+        default="_png",
+        help="Subfolder suffix when --per-pdf-subdir is used",
+    )
     args = parser.parse_args()
 
     in_path = args.input_path.resolve()
