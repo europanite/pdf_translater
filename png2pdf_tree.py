@@ -26,6 +26,7 @@ Options:
 import argparse
 import sys
 from pathlib import Path
+
 from PIL import Image
 
 
@@ -83,7 +84,9 @@ def save_images_as_pdf(images, out_file: Path, overwrite: bool):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Convert PNG/JPG images to PDF while preserving directory structure")
+    parser = argparse.ArgumentParser(
+        description="Convert PNG/JPG images to PDF while preserving directory structure"
+    )
     parser.add_argument("input_path", type=Path, help="Input image file or directory")
     parser.add_argument("output_root", type=Path, help="Output root directory")
     parser.add_argument("--exts", default="png,jpg,jpeg", help="Image extensions (comma-separated)")
