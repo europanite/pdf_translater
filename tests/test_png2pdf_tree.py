@@ -1,122 +1,115 @@
-import importlib
-import runpy
 import sys
+import runpy
 from pathlib import Path
+
+import pytest
 
 THIS_DIR = Path(__file__).resolve().parent
 REPO_ROOT = THIS_DIR.parent
-
-CANDIDATE_PATHS = [
-    THIS_DIR / "pdf2png_tree.py",
-    REPO_ROOT / "pdf2png_tree.py",
+CANDIDATES = [
+    THIS_DIR / "png2pdf_tree.py",
+    REPO_ROOT / "png2pdf_tree.py", 
 ]
 
 
-def load_module_and_get_main():
-    for path in CANDIDATE_PATHS:
+def load_main():
+    for path in CANDIDATES:
         if path.exists():
-            mod_dict = runpy.run_path(str(path))
-            main = mod_dict.get("main")
-            assert callable(main), "main() not found in project_to_markdown.py"
+            ns = runpy.run_path(str(path))
+            main = ns.get("main")
+            assert callable(main), "main() not found in png2pdf_tree.py"
             return main
+    raise FileNotFoundError(
+        "png2pdf_tree.py not found in tests/ or repo root. "
+        "Adjust CANDIDATES in test file."
+    )
 
-    if str(REPO_ROOT) not in sys.path:
-        sys.path.insert(0, str(REPO_ROOT))
+
+def run_script(argv: list[str]):
+    main = load_main()
+    old = sys.argv[:]
     try:
-        mod = importlib.import_module("project_to_markdown")
-        return getattr(mod, "main")
-    except Exception as e:
-        raise FileNotFoundError(
-            "project_to_markdown.py not found in tests/ or repo root, " "and import by name failed"
-        ) from e
-
-
-def run_script(tmp_path: Path, args: list[str]) -> Path:
-    out = tmp_path / "out.md"
-    full_args = ["prog"] + args + ["-o", str(out)]
-    argv_backup = sys.argv[:]
-    try:
-        sys.argv = full_args
-        main = load_module_and_get_main()
-        rc = main()
-        assert rc == 0
-        assert out.exists()
-        return out
+        sys.argv = ["prog"] + argv
+        main()
     finally:
-        sys.argv = argv_backup
+        sys.argv = old
 
 
-def test_basic_run_generates_output(tmp_path: Path):
-    proj = tmp_path / "proj"
-    proj.mkdir()
+def make_img(p: Path, size=(64, 48), color=(200, 100, 50)):
+    from PIL import Image
 
-    (proj / "a.py").write_text(
-        '"""doc"""\nimport os\n\ndef add(a, b):\n    return a + b\n',
-        encoding="utf-8",
-    )
-    (proj / "README.md").write_text("# Title\n\nSome text.", encoding="utf-8")
-    (proj / ".hidden").write_text("secret", encoding="utf-8")
-
-    out = run_script(tmp_path, ["-r", str(proj), "--title", "My Export"])
-    txt = out.read_text(encoding="utf-8")
-
-    assert "<!-- GENERATED" in txt
-    assert "# My Export" in txt
-    assert "## Overview" in txt
-    assert "## Table of contents" in txt
-    assert "## Files" in txt
-    assert "`.hidden`" in txt
-    assert "```python" in txt
-    assert "`a.py`" in txt
-    assert "def add(" in txt
+    p.parent.mkdir(parents=True, exist_ok=True)
+    Image.new("RGB", size, color).save(p)
 
 
-def test_exclude_hidden_and_only_ext(tmp_path: Path):
-    proj = tmp_path / "proj2"
-    proj.mkdir()
-    (proj / ".secret.txt").write_text("x", encoding="utf-8")
-    (proj / "keep.txt").write_text("keep", encoding="utf-8")
-    (proj / "skip.py").write_text("print('x')", encoding="utf-8")
+def test_basic_single_file_conversion(tmp_path: Path):
+    inp = tmp_path / "img.png"
+    out_root = tmp_path / "out"
+    make_img(inp)
 
-    out = run_script(
-        tmp_path,
-        ["-r", str(proj), "--exclude-hidden", "--only-ext", ".txt"],
-    )
-    txt = out.read_text(encoding="utf-8")
-    assert "`.secret.txt`" not in txt
-    assert "`keep.txt`" in txt
-    assert "`skip.py`" not in txt
+    run_script([str(inp), str(out_root)])
+    out_pdf = out_root / (inp.stem + "_converted.pdf")
+    assert out_pdf.exists()
+    assert out_pdf.stat().st_size > 0
 
 
-def test_truncation_marker(tmp_path: Path):
-    proj = tmp_path / "proj3"
-    proj.mkdir()
-    (proj / "big.txt").write_text("A" * 10_000, encoding="utf-8")
+def test_recursive_dir_mirror_structure(tmp_path: Path):
+    inp_dir = tmp_path / "in"
+    a = inp_dir / "a" / "x.png"
+    b = inp_dir / "b" / "y.jpg"
+    make_img(a)
+    make_img(b)
+    out_root = tmp_path / "out"
 
-    out = run_script(tmp_path, ["-r", str(proj), "--max-bytes-per-file", "100"])
-    txt = out.read_text(encoding="utf-8")
-    assert "[TRUNCATED due to max-bytes-per-file]" in txt
-
-
-def test_md_policy_render_demotes_headings(tmp_path: Path):
-    proj = tmp_path / "proj4"
-    proj.mkdir()
-    (proj / "doc.md").write_text("# H1\n\n## H2\n", encoding="utf-8")
-
-    out = run_script(tmp_path, ["-r", str(proj), "--md-policy", "render"])
-    txt = out.read_text(encoding="utf-8")
-    assert "#### H1" in txt
-    assert "#### Content (rendered, headings demoted)" in txt
+    run_script([str(inp_dir), str(out_root)])
+    assert (out_root / "a" / "x_converted.pdf").exists()
+    assert (out_root / "b" / "y_converted.pdf").exists()
 
 
-def test_mermaid_import_graph(tmp_path: Path):
-    proj = tmp_path / "proj5"
-    proj.mkdir()
-    (proj / "m1.py").write_text("import json\n", encoding="utf-8")
-    (proj / "m2.py").write_text("from os import path\n", encoding="utf-8")
+def test_merge_option_creates_one_pdf_per_folder(tmp_path: Path):
+    inp_dir = tmp_path / "in2"
+    img1 = inp_dir / "k" / "1.png"
+    img2 = inp_dir / "k" / "2.jpg"
+    make_img(img1)
+    make_img(img2)
+    out_root = tmp_path / "out2"
 
-    out = run_script(tmp_path, ["-r", str(proj), "--mermaid-import-graph"])
-    txt = out.read_text(encoding="utf-8")
-    assert "```mermaid" in txt
-    assert "graph LR" in txt
-    assert "json" in txt or "os" in txt
+    run_script([str(inp_dir), str(out_root), "--merge"])
+    merged = out_root / "k" / ("k_converted.pdf")
+    assert merged.exists()
+    assert not (out_root / "k" / "1_converted.pdf").exists()
+    assert not (out_root / "k" / "2_converted.pdf").exists()
+
+
+def test_only_ext_and_overwrite_behavior(tmp_path: Path):
+    inp_dir = tmp_path / "in3"
+    ok_png = inp_dir / "ok.png"
+    skip_bmp = inp_dir / "skip.bmp"
+    make_img(ok_png)
+    make_img(skip_bmp)
+    out_root = tmp_path / "out3"
+
+    run_script([str(inp_dir), str(out_root)])
+    out_pdf = out_root / "ok_converted.pdf"
+    assert out_pdf.exists()
+    first_mtime = out_pdf.stat().st_mtime
+
+    run_script([str(inp_dir), str(out_root)])
+    assert out_pdf.stat().st_mtime == pytest.approx(first_mtime)
+
+    run_script([str(inp_dir), str(out_root), "--overwrite"])
+    assert out_pdf.stat().st_mtime >= first_mtime
+
+    assert not (out_root / "skip_converted.pdf").exists()
+
+    run_script([str(inp_dir), str(out_root), "--exts", "png,jpg,jpeg,bmp"])
+    assert (out_root / "skip_converted.pdf").exists()
+
+
+def test_missing_input_exits_with_code_1(tmp_path: Path):
+    missing = tmp_path / "no_such_dir"
+    out_root = tmp_path / "out4"
+
+    with pytest.raises(SystemExit) as ei:
+        run_script([str(missing), str(out_root)])
+    assert ei.value.code == 1
