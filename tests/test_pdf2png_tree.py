@@ -1,15 +1,15 @@
+import runpy
 import sys
 import time
-import runpy
 from pathlib import Path
-import pytest
-import pymupdf  # noqa: E402  (after importorskip)
 
+import pymupdf  # noqa: E402  (after importorskip)
+import pytest
 
 THIS_DIR = Path(__file__).resolve().parent
 REPO_ROOT = THIS_DIR.parent
 CANDIDATES = [
-    THIS_DIR / "pdf2png_tree.py",   
+    THIS_DIR / "pdf2png_tree.py",
     REPO_ROOT / "pdf2png_tree.py",
 ]
 
@@ -22,8 +22,7 @@ def load_main():
             assert callable(main), "main() not found in pdf2png_tree.py"
             return main
     raise FileNotFoundError(
-        "pdf2png_tree.py not found in tests/ or repo root. "
-        "Adjust CANDIDATES in test file."
+        "pdf2png_tree.py not found in tests/ or repo root. " "Adjust CANDIDATES in test file."
     )
 
 

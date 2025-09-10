@@ -1,5 +1,5 @@
-import sys
 import runpy
+import sys
 from pathlib import Path
 
 import pytest
@@ -8,7 +8,7 @@ THIS_DIR = Path(__file__).resolve().parent
 REPO_ROOT = THIS_DIR.parent
 CANDIDATES = [
     THIS_DIR / "png2pdf_tree.py",
-    REPO_ROOT / "png2pdf_tree.py", 
+    REPO_ROOT / "png2pdf_tree.py",
 ]
 
 
@@ -20,8 +20,7 @@ def load_main():
             assert callable(main), "main() not found in png2pdf_tree.py"
             return main
     raise FileNotFoundError(
-        "png2pdf_tree.py not found in tests/ or repo root. "
-        "Adjust CANDIDATES in test file."
+        "png2pdf_tree.py not found in tests/ or repo root. " "Adjust CANDIDATES in test file."
     )
 
 
