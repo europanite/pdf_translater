@@ -1,30 +1,27 @@
+# pyproject.toml
 [build-system]
 requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "your_project_name"
-version = "0.1.0"
-description = "Your project description"
-authors = [
-  { name = "Masaaki Ikeda", email = "example@example.com" }
-]
+name = "pdf-translater"
+version = "0.2.0"
+description = "PDF ↔ PNG/JPG converters that mirror the directory structure."
+authors = [{ name = "Masaaki Ikeda", email = "example@example.com" }]
 readme = "README.md"
-license = { text = "MIT" }
+license = { text = "Apache-2.0" }
 requires-python = ">=3.9"
 dependencies = [
-  "requests",
+  "pillow>=10",
+  "pymupdf>=1.24",
 ]
 
 [project.optional-dependencies]
-dev = [
-  "pytest",
-  "pytest-cov",
-  "ruff",
-  "black",
-  "isort",
-  "mypy",
-]
+dev = ["pytest", "pytest-cov", "ruff", "isort", "mypy"]
+
+[project.scripts]
+pdf2png-tree = "pdf2png_tree:main"
+png2pdf-tree = "png2pdf_tree:main"
 
 [tool.pytest.ini_options]
 minversion = "7.0"
@@ -33,7 +30,7 @@ testpaths = ["tests"]
 
 [tool.coverage.run]
 branch = true
-source = ["your_project_name"]
+source = ["."]
 
 [tool.coverage.report]
 show_missing = true
@@ -47,14 +44,9 @@ target-version = "py39"
 select = ["E", "F", "I"]
 ignore = []
 
-[tool.black]
-line-length = 100
-target-version = ['py39']
-
 [tool.isort]
-profile = "black"
 line_length = 100
-src_paths = ["your_project_name", "tests"]
+src_paths = [".", "tests"]
 
 [tool.mypy]
 python_version = "3.9"
