@@ -1,13 +1,13 @@
+import os
 import runpy
 import sys
 import time
 from pathlib import Path
-
-import pymupdf  # noqa: E402  (after importorskip)
+import pymupdf
 import pytest
 
 THIS_DIR = Path(__file__).resolve().parent
-REPO_ROOT = THIS_DIR.parent
+REPO_ROOT = os.path.join(THIS_DIR.parent,"src")
 CANDIDATES = [
     THIS_DIR / "pdf2png_tree.py",
     REPO_ROOT / "pdf2png_tree.py",
