@@ -1,7 +1,9 @@
 import argparse
 import sys
 from pathlib import Path
+
 import pymupdf
+
 
 def is_pdf(path: Path) -> bool:
     return path.is_file() and path.suffix.lower() == ".pdf"

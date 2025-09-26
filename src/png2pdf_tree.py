@@ -1,7 +1,9 @@
 import argparse
 import sys
 from pathlib import Path
+
 from PIL import Image
+
 
 def is_image(path: Path, exts) -> bool:
     return path.is_file() and path.suffix.lower().lstrip(".") in exts
