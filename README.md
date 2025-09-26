@@ -1,5 +1,9 @@
 # [Pdf Translater](https://github.com/europanite/pdf_translater "Pdf Translater")
 
+[![CI (Python)](https://github.com/europanite/pdf_translater/actions/workflows/ci.yml/badge.svg)](https://github.com/europanite/pdf_translater/actions/workflows/ci.yml)
+[![Python Lint](https://github.com/europanite/pdf_translater/actions/workflows/lint.yml/badge.svg)](https://github.com/europanite/pdf_translater/actions/workflows/lint.yml)
+[![pages-build-deployment](https://github.com/europanite/pdf_translater/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/europanite/pdf_translater/actions/workflows/pages/pages-build-deployment)
+
 This repository contains two Python command‑line utilities that convert between **PDF** and **PNG/JPG** while **preserving the original directory structure**.
 
 - `pdf2png_tree.py` — Convert PDFs to PNG/JPG (page-per-image)

@@ -64,30 +64,6 @@ jobs:
           poetry install --no-interaction --no-root
           poetry run pip install pytest-cov ruff isort mypy
 
-      - name: Ruff (lint)
-        run: |
-          if [[ "${{ steps.depmgr.outputs.manager }}" == "poetry" ]]; then
-            poetry run ruff check .
-          else
-            ruff check .
-          fi
-
-      - name: isort (check only)
-        run: |
-          if [[ "${{ steps.depmgr.outputs.manager }}" == "poetry" ]]; then
-            poetry run isort --check-only .
-          else
-            isort --check-only .
-          fi
-
-      - name: mypy (type check)
-        run: |
-          if [[ "${{ steps.depmgr.outputs.manager }}" == "poetry" ]]; then
-            poetry run mypy .
-          else
-            mypy .
-          fi
-
       - name: Pytest
         run: |
           if [[ "${{ steps.depmgr.outputs.manager }}" == "poetry" ]]; then
