@@ -1,41 +1,7 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
-"""
-pdf2png_tree.py (fixed)
-Convert PDF files (single file or recursively under a directory) to PNG/JPG
-while preserving the original directory structure.
-
-Default behavior:
-  - Mirror the input directory tree under the output root.
-  - Do NOT create a subfolder per PDF; pages are saved directly as:
-      <out_root>/<relative_dir>/<pdf_stem>_p001.png
-
-Optional:
-  --per-pdf-subdir will create a subfolder per PDF:
-      <out_root>/<relative_dir>/<pdf_stem><suffix>/<pdf_stem>_p001.png
-
-Usage:
-  Single file:
-    python pdf2png_tree.py /path/to/file.pdf /path/to/outdir
-
-  Directory (recursive):
-    python pdf2png_tree.py /path/to/input_dir /path/to/outdir -d 200
-
-Options:
-  -d, --dpi              Output resolution (default: 144)
-  --ext                  Output extension (png/jpg, default: png)
-  --overwrite            Overwrite existing images
-  --per-pdf-subdir       Create a subfolder per PDF (off by default)
-  --suffix               Subfolder suffix when --per-pdf-subdir is used (default: _png)
-"""
-
 import argparse
 import sys
 from pathlib import Path
-
-import pymupdf  # PyMuPDF
-
+import pymupdf
 
 def is_pdf(path: Path) -> bool:
     return path.is_file() and path.suffix.lower() == ".pdf"

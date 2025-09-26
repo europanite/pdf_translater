@@ -1,2 +1,10 @@
+title: "pdf_translater"
+description: "PDF Translation Utilities"
+baseurl: "/pdf_translater"
+url: "https://europanite.github.io"
+theme: minima
+markdown: kramdown
 plugins:
+  - jekyll-feed
   - jekyll-sitemap
+highlighter: rouge

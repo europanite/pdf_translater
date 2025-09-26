@@ -3,9 +3,6 @@ on:
   push:
   workflow_dispatch:
   pull_request:
-    paths:
-      - "backend/**"
-      - ".github/workflows/lint.yml"
   schedule:
     - cron: '0 0 * * *'
 permissions:
@@ -31,7 +28,7 @@ jobs:
       - name: Install tools
         run: |
           python -m pip install -U pip
-          pip install black ruff
+          pip install -r requirements-dev.txt
       - name: Ruff (lint)
         run: ruff check .
       - name: Ruff SARIF
