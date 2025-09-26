@@ -1,28 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
-"""
-png2pdf_tree.py
-Convert PNG (or JPG) images into PDF files
-while preserving the original directory structure.
-
-Default: each image -> one PDF
-Option: --merge to combine images in the same folder into one PDF
-
-Usage:
-  Single file:
-    python png2pdf_tree.py /path/to/image.png /path/to/output_dir
-
-  Directory (recursive):
-    python png2pdf_tree.py /path/to/input_dir /path/to/output_dir
-
-Options:
-  --exts       Comma-separated list of image extensions (default: png,jpg,jpeg)
-  --suffix     Suffix for output PDF filenames (default: _converted)
-  --overwrite  Overwrite existing PDFs (default: skip if exists)
-  --merge      Merge images per folder into one PDF
-"""
-
 import argparse
 import sys
 from pathlib import Path
