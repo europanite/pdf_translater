@@ -16,7 +16,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-dev = ["pytest", "pytest-cov", "ruff", "isort", "mypy"]
+dev = ["pytest", "pytest-cov", "ruff"]
 
 [project.scripts]
 pdf2png-tree = "pdf2png_tree:main"
@@ -43,11 +43,3 @@ target-version = "py39"
 select = ["E", "F", "I"]
 ignore = []
 
-[tool.isort]
-line_length = 100
-src_paths = [".", "tests"]
-
-[tool.mypy]
-python_version = "3.9"
-ignore_missing_imports = true
-show_error_codes = true
