@@ -1,4 +1,4 @@
-# [Pdf Translater](https://github.com/europanite/pdf_translater "Pdf Translater")
+# [PDF Translater](https://github.com/europanite/pdf_translater "PDF Translater")
 
 [![CI](https://github.com/europanite/pdf_translater/actions/workflows/ci.yml/badge.svg)](https://github.com/europanite/pdf_translater/actions/workflows/ci.yml)
 [![Python Lint](https://github.com/europanite/pdf_translater/actions/workflows/lint.yml/badge.svg)](https://github.com/europanite/pdf_translater/actions/workflows/lint.yml)
