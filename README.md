@@ -3,6 +3,7 @@
 [![CI](https://github.com/europanite/pdf_translater/actions/workflows/ci.yml/badge.svg)](https://github.com/europanite/pdf_translater/actions/workflows/ci.yml)
 [![Python Lint](https://github.com/europanite/pdf_translater/actions/workflows/lint.yml/badge.svg)](https://github.com/europanite/pdf_translater/actions/workflows/lint.yml)
 [![pages-build-deployment](https://github.com/europanite/pdf_translater/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/europanite/pdf_translater/actions/workflows/pages/pages-build-deployment)
+[![CodeQL Advanced](https://github.com/europanite/pdf_translater/actions/workflows/codeql.yml/badge.svg)](https://github.com/europanite/pdf_translater/actions/workflows/codeql.yml)
 
 PDF Translation Utilities.
 
