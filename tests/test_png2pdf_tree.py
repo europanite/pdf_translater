@@ -7,7 +7,7 @@ import pytest
 THIS_DIR = Path(__file__).resolve().parent
 REPO_ROOT = THIS_DIR.parent
 CANDIDATES = [
-    THIS_DIR / "src/" / "png2pdf_tree.py",
+    THIS_DIR  / "src/" / "png2pdf_tree.py",
     REPO_ROOT / "src/" / "png2pdf_tree.py",
 ]
 
