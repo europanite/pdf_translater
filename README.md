@@ -69,13 +69,46 @@ Convert images to PDF while mirroring the input directory tree.
 **Default:** each image becomes one PDF.  
 **Option `--merge`:** merge images **per folder** into one multi‑page PDF.
 
+## Requirements
+
+- Python 3.9+
+- Dependencies:
+  - `pymupdf`
+  - `pillow`
+
+---
+
 ### Usage
+
+### 0. Create virtual environment
+
+```bash
+python3 -m venv env
+source env/bin/activate
+pip install -r requirements.txt
+```
+
+### 1. Translate
+
 ```bash
 # Per image (default)
 python png2pdf_tree.py /path/to/images /path/to/outdir
 
 # Merge images per folder into one PDF
 python png2pdf_tree.py /path/to/images /path/to/outdir --merge
+```
+
+### 2. Test
+
+```bash
+pip install -r requirements.test.txt
+pytest
+```
+
+### 3. Deactivate environment
+
+```bash
+deactivate
 ```
 
 ### Options
