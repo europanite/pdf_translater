@@ -1,9 +1,12 @@
-# [PDF Translater](https://github.com/europanite/pdf_translater "PDF Translater")
+# [PDF Translator](https://github.com/europanite/pdf_translator "PDF Translator")
 
-[![CI](https://github.com/europanite/pdf_translater/actions/workflows/ci.yml/badge.svg)](https://github.com/europanite/pdf_translater/actions/workflows/ci.yml)
-[![Python Lint](https://github.com/europanite/pdf_translater/actions/workflows/lint.yml/badge.svg)](https://github.com/europanite/pdf_translater/actions/workflows/lint.yml)
-[![pages-build-deployment](https://github.com/europanite/pdf_translater/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/europanite/pdf_translater/actions/workflows/pages/pages-build-deployment)
-[![CodeQL Advanced](https://github.com/europanite/pdf_translater/actions/workflows/codeql.yml/badge.svg)](https://github.com/europanite/pdf_translater/actions/workflows/codeql.yml)
+[![Python](https://img.shields.io/badge/python-3.9|%203.10%20|%203.11|%203.12|%203.13-blue)](https://www.python.org/)
+![OS](https://img.shields.io/badge/OS-Linux%20%7C%20macOS%20%7C%20Windows-blue)
+
+[![CI](https://github.com/europanite/pdf_translator/actions/workflows/ci.yml/badge.svg)](https://github.com/europanite/pdf_translator/actions/workflows/ci.yml)
+[![Python Lint](https://github.com/europanite/pdf_translator/actions/workflows/lint.yml/badge.svg)](https://github.com/europanite/pdf_translator/actions/workflows/lint.yml)
+[![pages-build-deployment](https://github.com/europanite/pdf_translator/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/europanite/pdf_translator/actions/workflows/pages/pages-build-deployment)
+[![CodeQL Advanced](https://github.com/europanite/pdf_translator/actions/workflows/codeql.yml/badge.svg)](https://github.com/europanite/pdf_translator/actions/workflows/codeql.yml)
 
 PDF Translation Utilities.
 
